@@ -421,7 +421,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                tox -e black -- --check
+                tox -e black
 
           - task: Bash@3
             displayName: 'Release'

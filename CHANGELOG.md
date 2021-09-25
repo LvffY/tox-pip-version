@@ -3,7 +3,8 @@
 0.0.0.3 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- [#3] Fix multiple sonar issues
+- [#4] Pass to setup.cfg setuptools configuration
 
 
 0.0.0.2 (2021-09-24 09:34:54)
