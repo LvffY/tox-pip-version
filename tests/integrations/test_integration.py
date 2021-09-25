@@ -4,6 +4,8 @@ from tempfile import TemporaryDirectory
 
 import pytest
 
+"""Integration tests for our tox plugin"""
+
 HERE = path.realpath(path.dirname(__file__))
 PACKAGE_DIR = path.realpath(path.join(HERE, "../.."))
 

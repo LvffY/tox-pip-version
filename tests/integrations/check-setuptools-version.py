@@ -4,6 +4,8 @@ from sys import argv
 from packaging.specifiers import SpecifierSet
 from packaging.version import Version
 
+"""Python script to check which setuptools version is installed in the current environment"""
+
 VERSION_RANGE_OPERATORS = ("==", "!=", "<", "<=", ">", ">=", "~=", "===")
 
 
