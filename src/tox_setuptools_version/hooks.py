@@ -36,9 +36,8 @@ def tox_configure(config: Config):
     :param config: Tox configuration
     :return: Nothing, update PER_ENV_SETUPTOOLS_VERSIONS dictionary
     """
-    print(config)
     for env, envconfig in config.envconfigs.items():
-        setuptools_version = envconfig._reader.getstring("setuptools_version")
+        setuptools_version = envconfig._reader.getstring("setuptools_version")  # pylint: disable=W0212
         if setuptools_version:
             PER_ENV_SETUPTOOLS_VERSIONS[env] = setuptools_version
 
@@ -56,7 +55,7 @@ def tox_testenv_install_deps(venv, action) -> None:
 
     # Grab the env this way to respect `setenv = TOX_SETUPTOOLS_VERSION`, if present.
     # But, fallback to the process-level environment if not present in `setenv`
-    env = venv._get_os_environ()
+    env = venv._get_os_environ()  # pylint: disable=W0212
     tox_setuptools_version_from_env = env.get(
         TOX_SETUPTOOLS_VERSION_VAR, getenv(TOX_SETUPTOOLS_VERSION_VAR)
     )
@@ -81,4 +80,4 @@ def tox_testenv_install_deps(venv, action) -> None:
         print(f"{venvname} setuptools_version is {package}")
 
         # "private" _install method - unstable interface?
-        venv._install([package], extraopts=["--upgrade"], action=action)
+        venv._install([package], extraopts=["--upgrade"], action=action)  # pylint: disable=W0212
