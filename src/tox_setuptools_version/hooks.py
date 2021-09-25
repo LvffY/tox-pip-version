@@ -3,7 +3,9 @@ from os import getenv
 from pluggy import HookimplMarker
 from tox.config import Config
 
-"""Hook module to be used by tox to ensure that setuptools version is not necessarily the latest"""
+"""
+Hook module to be used by tox to ensure that setuptools version is not necessarily the latest
+"""
 
 hookimpl = HookimplMarker("tox")
 
