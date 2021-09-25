@@ -5,7 +5,7 @@ import tempfile
 import pytest
 
 HERE = os.path.realpath(os.path.dirname(__file__))
-PACKAGE_DIR = os.path.realpath(os.path.join(HERE, "../../src"))
+PACKAGE_DIR = os.path.realpath(os.path.join(HERE, "../.."))
 
 
 def setup_fresh_venv(tag):
