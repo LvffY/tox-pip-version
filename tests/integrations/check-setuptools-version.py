@@ -1,8 +1,8 @@
 import subprocess
 import sys
 
-from packaging.version import Version
 from packaging.specifiers import SpecifierSet
+from packaging.version import Version
 
 VERSION_RANGE_OPERATORS = ("==", "!=", "<", "<=", ">", ">=", "~=", "===")
 
