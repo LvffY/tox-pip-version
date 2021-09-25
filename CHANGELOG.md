@@ -1,7 +1,7 @@
 [[_TOC_]]
 
-0.0.0.3 (unreleased)
---------------------
+0.0.0.3 (2021-09-25 15:40:14)
+-----------------------------
 
 - [#3] Fix multiple sonar issues
 - [#4] Pass to setup.cfg setuptools configuration
