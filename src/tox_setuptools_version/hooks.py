@@ -82,4 +82,3 @@ def tox_testenv_install_deps(venv, action) -> None:
 
         # "private" _install method - unstable interface?
         venv._install([package], extraopts=["--upgrade"], action=action)
-    return None
