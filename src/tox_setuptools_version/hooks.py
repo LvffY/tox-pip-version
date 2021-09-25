@@ -1,8 +1,9 @@
-import os
+from os import getenv
 
-import pluggy
+from pluggy import HookimplMarker
+from tox.config import Config
 
-hookimpl = pluggy.HookimplMarker("tox")
+hookimpl = HookimplMarker("tox")
 
 # This will store the setuptools version specified for each testenv
 PER_ENV_SETUPTOOLS_VERSIONS = {}
@@ -10,7 +11,7 @@ PER_ENV_SETUPTOOLS_VERSIONS = {}
 TOX_SETUPTOOLS_VERSION_VAR = "TOX_SETUPTOOLS_VERSION"
 
 
-def get_setuptools_package_version(setuptools_version):
+def get_setuptools_package_version(setuptools_version: str) -> str:
     """
     Generate the right setuptools command for pip command
 
@@ -22,17 +23,18 @@ def get_setuptools_package_version(setuptools_version):
     if setuptools_version.startswith("setuptools"):
         return setuptools_version
     # tox.ini: setuptools_version = 19.0
-    return "setuptools==%s" % setuptools_version
+    return f"setuptools=={setuptools_version}"
 
 
 @hookimpl
-def tox_configure(config):
+def tox_configure(config: Config):
     """
     Tox configure implementation
 
     :param config: Tox configuration
     :return: Nothing, update PER_ENV_SETUPTOOLS_VERSIONS dictionary
     """
+    print(config)
     for env, envconfig in config.envconfigs.items():
         setuptools_version = envconfig._reader.getstring("setuptools_version")
         if setuptools_version:
@@ -54,7 +56,7 @@ def tox_testenv_install_deps(venv, action) -> None:
     # But, fallback to the process-level environment if not present in `setenv`
     env = venv._get_os_environ()
     tox_setuptools_version_from_env = env.get(
-        TOX_SETUPTOOLS_VERSION_VAR, os.getenv(TOX_SETUPTOOLS_VERSION_VAR)
+        TOX_SETUPTOOLS_VERSION_VAR, getenv(TOX_SETUPTOOLS_VERSION_VAR)
     )
 
     # action.venvname is 'py36', for example.
@@ -74,7 +76,7 @@ def tox_testenv_install_deps(venv, action) -> None:
 
         # Is there a way to output this better? Genuine tox commands show up
         # colorized (as bold white text)...
-        print("%s setuptools_version is %s" % (venvname, package))
+        print(f"{venvname} setuptools_version is {package}")
 
         # "private" _install method - unstable interface?
         venv._install([package], extraopts=["--upgrade"], action=action)

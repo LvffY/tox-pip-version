@@ -1,38 +1,38 @@
-import os
-import subprocess
-import tempfile
+from os import path
+from subprocess import check_call
+from tempfile import TemporaryDirectory
 
 import pytest
 
-HERE = os.path.realpath(os.path.dirname(__file__))
-PACKAGE_DIR = os.path.realpath(os.path.join(HERE, "../.."))
+HERE = path.realpath(path.dirname(__file__))
+PACKAGE_DIR = path.realpath(path.join(HERE, "../.."))
 
 
 def setup_fresh_venv(tag):
-    temp_dir = tempfile.TemporaryDirectory(prefix=tag)
-    venv_dir = os.path.join(temp_dir.name, "venv")
-    subprocess.check_call(["virtualenv", venv_dir])
-    print("Created venv: %s" % venv_dir)
+    temp_dir = TemporaryDirectory(prefix=tag)
+    venv_dir = path.join(temp_dir.name, "venv")
+    check_call(["virtualenv", venv_dir])
+    print(f"Created venv: {venv_dir}")
     return temp_dir, venv_dir
 
 
 def install_deps(venv_dir, *deps):
     """Install a dependency into the virtualenv"""
-    pip = os.path.join(venv_dir, "bin", "pip")
+    pip = path.join(venv_dir, "bin", "pip")
     cmd = [pip, "install"] + list(deps)
-    subprocess.check_call(cmd, cwd=venv_dir, env={})
+    check_call(cmd, cwd=venv_dir, env={})
 
 
 def _run_case(venv_dir, subdirectory, env=None):
-    tox_work_dir = os.path.join(venv_dir, ".tox")
-    directory = os.path.join(HERE, subdirectory)
-    activate = os.path.join(venv_dir, "bin", "activate")
-    command = ". %s; pip freeze; tox --workdir %s" % (activate, tox_work_dir)
-    print("Running: '%s'" % command)
-    subprocess.check_call(command, cwd=directory, shell=True, env=env)
+    tox_work_dir = path.join(venv_dir, ".tox")
+    directory = path.join(HERE, subdirectory)
+    activate = path.join(venv_dir, "bin", "activate")
+    command = f". {activate}; pip freeze; tox --workdir {tox_work_dir}"
+    print(f"Running: '{command}'")
+    check_call(command, cwd=directory, shell=True, env=env)
 
 
-## List test cases (which match tests sub-directory) and possibly add some environment variables
+# List test cases (which match tests sub-directory) and possibly add some environment variables
 CASES = [
     ("test-two-envs", {}),
     ("test-env-inheritance", {}),
@@ -58,7 +58,7 @@ def test_with_tox_version(subdirectory, env):
         temp_dir.cleanup()
 
 
-## Add one case when using tox_pip_version
+# Add one case when using tox_pip_version
 AIRFLOW_CASES = CASES + [
     (
         "test-with-airflow",
