@@ -17,9 +17,7 @@ def to_specifer_set(raw_version):
 
 def main():
     expected_set = to_specifer_set(argv[1])
-    raw_setuptools_version = check_output(
-        ["pip", "show", "setuptools"]
-    ).decode()
+    raw_setuptools_version = check_output(["pip", "show", "setuptools"]).decode()
     actual_version = Version(
         raw_setuptools_version.split("\n")[1].split(":")[1].strip()
     )

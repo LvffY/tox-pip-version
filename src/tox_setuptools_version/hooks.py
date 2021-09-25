@@ -39,7 +39,9 @@ def tox_configure(config: Config):
     :return: Nothing, update PER_ENV_SETUPTOOLS_VERSIONS dictionary
     """
     for env, envconfig in config.envconfigs.items():
-        setuptools_version = envconfig._reader.getstring("setuptools_version")  # pylint: disable=W0212
+        setuptools_version = envconfig._reader.getstring(
+            "setuptools_version"
+        )  # pylint: disable=W0212
         if setuptools_version:
             PER_ENV_SETUPTOOLS_VERSIONS[env] = setuptools_version
 
@@ -82,4 +84,6 @@ def tox_testenv_install_deps(venv, action) -> None:
         print(f"{venvname} setuptools_version is {package}")
 
         # "private" _install method - unstable interface?
-        venv._install([package], extraopts=["--upgrade"], action=action)  # pylint: disable=W0212
+        venv._install(
+            [package], extraopts=["--upgrade"], action=action
+        )  # pylint: disable=W0212
