@@ -39,7 +39,7 @@ Install the package and include `setuptools_version` in your tox.ini
 
 ```tox
 [testenv]
-setuptools_version = setuptools_version<58
+setuptools_version = setuptools<58
 ```
 
 Or, set the `TOX_SETUPTOOLS_VERSION` environment variable,
